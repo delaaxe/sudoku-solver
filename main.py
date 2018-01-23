@@ -43,7 +43,7 @@ class RuleBasedSolver:
             elif len(common) > 1:
                 raise Contradiction
 
-    def find_results(self):
+    def find_results(self) -> int:
         found = 0
         for index, possible_values in self.possibilities.items():
             if len(possible_values) == 1:
@@ -52,7 +52,7 @@ class RuleBasedSolver:
                 self.possibilities[index] = set()
         return found
 
-    def solve_until_stuck(self):
+    def solve_until_stuck(self) -> int:
         found = 1
         total_found = 0
         while found > 0:
@@ -68,7 +68,7 @@ class RuleBasedSolver:
             total_found += found
         return total_found
 
-    def is_solved(self):
+    def is_solved(self) -> bool:
         expected = set(range(1, 10))
         for i in range(9):
             if set(self.grid[:, i]) != expected:
@@ -133,7 +133,7 @@ class BeamSearchSolver:
 
         return steps
 
-    def solve(self, grid):
+    def solve(self, grid: np.array) -> np.array:
         grid = grid.copy()
         solver = RuleBasedSolver(grid)
         solver.solve_until_stuck()
@@ -145,7 +145,7 @@ class BeamSearchSolver:
             return None
 
 
-def load_grid():
+def load_grid() -> np.array:
     with open('extreme-3.txt') as fp:
         return np.array([[int(c.replace('.', '0')) for c in line.replace('\n', '')] for line in fp])
 
